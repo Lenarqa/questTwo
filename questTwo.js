@@ -13,8 +13,6 @@ class userStruct {
         this.sumOfRequests = requestPerHour * numberOfHours;
         this.inform = inform;
     }
-
-    
 }
 
 stringArray.forEach((el)=> {
@@ -25,9 +23,6 @@ stringArray.forEach((el)=> {
     users.push(new userStruct (name, requestPerHour, numberOfHours, inform));
 });
 
-// console.log(users[0].name);
-
-let finishUsers = []
 for (let i = 0; i < users.length; i++) {
     for (let j = 0; j < users.length; j++) {
         if(users[i].name == users[j].name && i != j) {
@@ -42,8 +37,17 @@ for (let i = 0; i < users.length; i++) {
 // сортируем по алфафиту
 users.sort((a,b)=> a.name > b.name ? 1 : -1);
 
-let logger = fs.createWriteStream('finishText.txt', {flags: 'a'});
+let logger = fs.createWriteStream('finishText.txt');
+
+// В случае если нужно сохранять прошлые запаршенные в текстовый файл данные
+// в createWriteStream можно добавить {flags: 'a'}; 
+// тогда к прошлым данным будут добавляться новые данные
+// let logger = fs.createWriteStream('finishText.txt', {flags: 'a'});
+
+
 users.map((user) => {
     let userString = `${user.name} ${user.requestPerHour} ${user.numberOfHours} ${user.sumOfRequests} ${user.inform}`;
     logger.write(userString + '\n');
 });
+
+// node questTwo.js in terminal
